@@ -575,6 +575,7 @@ const TARGET_PATIENT = 'Jessica Taylor';
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 let bpChart = null;
+let allPatients = null;
 
 async function fetchPatients() {
   const controller = new AbortController();
@@ -865,16 +866,35 @@ document.querySelectorAll('.nav-link').forEach(link => {
 });
 
 document.getElementById('patientList').addEventListener('click', e => {
-  if (e.target.closest('.patient-item')) {
-    sidebar.classList.remove('patients-sidebar--open');
-    overlay.classList.remove('sidebar-overlay--visible');
-  }
+  const item = e.target.closest('.patient-item');
+  if (!item) return;
+  selectPatient(item.querySelector('.patient-item__name').textContent);
+  /* close drawer on mobile after selection */
+  sidebar.classList.remove('patients-sidebar--open');
+  overlay.classList.remove('sidebar-overlay--visible');
 });
 
 overlay.addEventListener('click', () => {
   sidebar.classList.remove('patients-sidebar--open');
   overlay.classList.remove('sidebar-overlay--visible');
 });
+
+function selectPatient(name) {
+  const patient = allPatients.find(p => p.name === name) || allPatients[0];
+  renderPatientList(allPatients, patient.name);   /* re-renders list with new active highlight */
+
+  const safe = (fn, ...args) => { try { fn(...args); } catch (e) { console.warn('render failed:', fn.name, e); } };
+  safe(renderProfile, patient);
+
+  const sixMonths = lastSixMonths(patient.diagnosis_history);
+  safe(renderChart, sixMonths);
+
+  const latest = sixMonths[sixMonths.length - 1];
+  if (latest) safe(renderLegendAndVitals, latest);
+
+  safe(renderDiagnosticList, patient.diagnostic_list);
+  safe(renderLabResults, patient.lab_results);
+}
 
 (async function init() {
   let patients;
@@ -891,17 +911,8 @@ overlay.addEventListener('click', () => {
   const doctorSrc = (patients[1] && patients[1].profile_picture) || patient.profile_picture;
   if (doctorImg && doctorSrc) doctorImg.src = doctorSrc;
 
-  const sixMonths = lastSixMonths(patient.diagnosis_history);
-  const latest = sixMonths[sixMonths.length - 1];
-
-  const safe = (fn, ...args) => { try { fn(...args); } catch (e) { console.warn('render failed:', fn.name, e); } };
-
-  safe(renderPatientList, patients, patient.name);
-  safe(renderProfile, patient);
-  safe(renderChart, sixMonths);
-  if (latest) safe(renderLegendAndVitals, latest);
-  safe(renderDiagnosticList, patient.diagnostic_list);
-  safe(renderLabResults, patient.lab_results);
+  allPatients = patients;
+  selectPatient(patient.name);
 })();
 </script>
 

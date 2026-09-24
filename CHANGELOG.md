@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Interactive sidebar patient switching
+
+**index.html — JavaScript**
+- Added `allPatients` global variable to store the fetched patient list for reuse.
+- **Created `selectPatient(name)` function** that handles full dashboard re-rendering when a patient is selected:
+  - Finds patient by name from `allPatients` array.
+  - Re-renders patient list with new active highlight.
+  - Re-renders profile, chart, vitals, diagnostics, and lab results for the selected patient.
+  - Uses `safe()` wrapper for error handling on all render calls.
+- **Enhanced patient list click handler**: now calls `selectPatient()` with the clicked patient's name, then closes the mobile drawer.
+- **Refactored boot sequence**: moved render logic into `selectPatient()` call to avoid duplication. Initial load now calls `selectPatient(patient.name)` after fetching data.
+
+---
+
 ### 2026-09-24 — Corrected download SVG
 
 **index.html**
