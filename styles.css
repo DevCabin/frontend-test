@@ -1,0 +1,395 @@
+/* ============================================
+   TECH.CARE DASHBOARD — SKELETON CSS
+   Layout only. Colors/borders are temporary
+   "ghost" styles to make structure visible.
+   ============================================ */
+
+/* ---------- 1. RESET / BASE ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Temporary ghost borders so skeleton structure is visible */
+.top-navbar,
+.patients-sidebar,
+.chart-card,
+.vital-card,
+.diagnostic-table-wrapper,
+.lab-results,
+.patient-profile {
+  border: 1px dashed #999;
+}
+
+/* ---------- 2. TOP NAVBAR ---------- */
+.top-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 32px;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0; /* real divider — keep */
+}
+
+.navbar-brand {
+  flex-shrink: 0;
+}
+
+.brand-logo__img {
+  height: 36px;
+  display: block;
+}
+
+.navbar-nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.nav-link--active {
+  background-color: #01F0D5; /* teal — keep for active state */
+}
+
+.navbar-doctor {
+  flex-shrink: 0;
+}
+
+.doctor-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doctor-mini__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.doctor-mini__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor-mini__title {
+  font-size: 12px;
+  color: #666;
+}
+
+/* ---------- 3. DASHBOARD 3-COLUMN GRID ---------- */
+.dashboard {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 300px 1fr 340px;
+  gap: 24px;
+  padding: 24px 32px;
+  align-items: start;
+}
+
+/* ---------- 4. PATIENTS SIDEBAR (LEFT) ---------- */
+.patients-sidebar {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  /* Sticky so list scrolls independently */
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+
+.patients-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.patient-list {
+  list-style: none;
+}
+
+.patient-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 8px;
+}
+
+.patient-item--active {
+  background-color: #D0F4F0; /* mint — keep for selected */
+}
+
+.patient-item__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.patient-item__info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.patient-item__meta {
+  font-size: 12px;
+  color: #666;
+}
+
+.patient-item__menu {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* ---------- 5. CENTER MAIN COLUMN ---------- */
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-title {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+/* --- Chart Card --- */
+.chart-card {
+  background-color: #F4F0FE; /* lavender — keep */
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.chart-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.chart-card__body {
+  display: flex;
+  gap: 24px;
+}
+
+.chart-card__chart {
+  flex-grow: 1;
+  /* Chart canvas fills this */
+}
+
+.chart-card__legend {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.legend-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.legend-item__value {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.legend-item__trend {
+  font-size: 12px;
+  color: #666;
+}
+
+/* --- Vitals Row --- */
+.vitals-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.vital-card {
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vital-card--respiratory  { background-color: #E0F3FA; } /* blue */
+.vital-card--temperature  { background-color: #FFE6E9; } /* peach */
+.vital-card--heart-rate   { background-color: #FFE1F1; } /* pink */
+
+.vital-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.vital-card__value {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.vital-card__status {
+  font-size: 12px;
+}
+
+/* --- Diagnostic Table --- */
+.diagnostic-table-wrapper {
+  background-color: #fff;
+  border-radius: 12px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.diagnostic-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.diagnostic-table th,
+.diagnostic-table td {
+  text-align: left;
+  padding: 14px 20px;
+  font-size: 14px;
+}
+
+.diagnostic-table__head {
+  position: sticky;
+  top: 0;
+  background-color: #F4F4F4; /* header row tint */
+}
+
+.diagnostic-table__row {
+  border-top: 1px solid #eee;
+}
+
+.status-badge--under-observation { /* yellow pill */ }
+.status-badge--cured             { /* green pill  */ }
+.status-badge--inactive          { /* gray pill   */ }
+
+/* --- Lab Results --- */
+.lab-results {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.lab-results__list {
+  list-style: none;
+}
+
+.lab-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+
+/* ---------- 6. PATIENT PROFILE (RIGHT) ---------- */
+.patient-profile {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.patient-profile__header {
+  margin-bottom: 24px;
+}
+
+.patient-profile__avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.patient-profile__details {
+  list-style: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.profile-detail {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profile-detail__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-detail__label {
+  font-size: 12px;
+  color: #666;
+}
+
+.patient-profile__show-all-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 24px;
+  background-color: #01F0D5; /* teal — keep */
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ---------- 7. RESPONSIVE HOOKS (fill in later) ---------- */
+@media (max-width: 1200px) {
+  /* Tablet: stack right column under main */
+}
+
+@media (max-width: 768px) {
+  /* Mobile: single column stack */
+}
