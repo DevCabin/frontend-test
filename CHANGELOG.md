@@ -6,6 +6,24 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Error handling & data resilience
+
+**index.html — HTML**
+- Added `<base target="_blank">` to make all links open in new tabs by default.
+
+**index.html — JavaScript**
+- Removed unused `PROFILE_IMAGE_ASSET` constant.
+- **Refactored `renderProfile()`**: moved SVG icon definitions inline within the template literal instead of pre-defining as constants (cleaner code structure).
+- **Enhanced `renderLabResults()` for data resilience**:
+  - Now handles multiple data formats: strings, objects with `name`, `test_name`, or `type` properties.
+  - Added fallback to default mockup list (Blood Tests, CT Scans, Radiology Reports, X-Rays, Urine Test) when API returns no usable data.
+  - Changed download icon back to simple stroke-based SVG (24×24) from detailed filled version.
+- **Added error resilience to boot sequence**:
+  - Created `safe()` wrapper function that catches and logs render errors with `console.warn()`.
+  - Wrapped all render calls (`renderPatientList`, `renderProfile`, `renderChart`, `renderLegendAndVitals`, `renderDiagnosticList`, `renderLabResults`) in `safe()` to prevent one failing render from breaking the entire dashboard.
+
+---
+
 ### 2026-09-24 — Complete SVG icon system overhaul
 
 **index.html — CSS**
