@@ -6,6 +6,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Corrected download SVG
+
+**index.html**
+- Replaced stroke-based download icon in lab results with the correct **filled Material Design-style SVG** (20×20, with `xmlns` attribute) matching the mockup.
+
+---
+
 ### 2026-09-24 — Error handling & data resilience
 
 **index.html — HTML**
