@@ -6,6 +6,32 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Code cleanup & icon refactor
+
+**index.html — CSS**
+- Removed inline comments throughout (cleaner code).
+- Simplified section comments (e.g., "DASHBOARD GRID (fluid tracks — no hard-width overlap)" → "DASHBOARD GRID").
+- Simplified multi-line count-up comment to single line.
+- **Refactored `.vital-card__icon`**: removed white circle background container (border-radius, background, flex layout). Icon now uses the SVG directly at full size.
+- Changed `.vital-card__icon svg` from `36×36px` → `58×58px` with `display: block`.
+
+**index.html — HTML**
+- Removed all HTML section comments (`<!-- TOP NAVBAR -->`, `<!-- DASHBOARD -->`, `<!-- LEFT: PATIENT LIST -->`, etc.).
+- **Replaced all inline SVG icons** in vital cards with **external PNG images** from Google Cloud Storage:
+  - Respiratory rate: `4ab0d187-08c3-4e86-9a7f-8d0b8737e139.png`
+  - Temperature: `06a3e12e-7e05-4d06-86c6-2e58e8dbc87d.png`
+  - Heart rate: `949b3d4c-3e3b-4fa2-b409-1e1d37c402f9.png`
+- Icons now use `<img>` tags with fixed `58×58` dimensions instead of inline `<svg>` elements.
+
+**index.html — JavaScript**
+- Compressed Chart.js dataset configurations into fewer lines (more concise).
+- Compressed Chart.js scale options into fewer lines.
+- Removed multi-line section comment blocks (`/* MOBILE NAV + PATIENT DRAWER */`, `/* BOOT */`).
+- Removed inline comments throughout (cleaner code).
+- Simplified comment blocks to single-line format.
+
+---
+
 ### 2026-09-24 — Fluid grid & mobile UX refinements
 
 **index.html — CSS**
