@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech.Care — HealthCare Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===================== TOP NAVIGATION BAR ===================== -->
+  <header class="top-navbar">
+    <div class="navbar-brand">
+      <a href="#" class="brand-logo">
+        <img src="assets/logo.svg" alt="Tech.Care" class="brand-logo__img">
+      </a>
+    </div>
+
+    <nav class="navbar-nav">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="#" class="nav-link">Overview</a>
+        </li>
+        <li class="nav-item nav-item--active">
+          <a href="#" class="nav-link nav-link--active">Patients</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Schedule</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Message</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Transactions</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="navbar-doctor">
+      <div class="doctor-mini">
+        <img src="assets/doctor.jpg" alt="Dr. Jose Simmons" class="doctor-mini__avatar">
+        <div class="doctor-mini__info">
+          <span class="doctor-mini__name">Dr. Jose Simmons</span>
+          <span class="doctor-mini__title">General Practitioner</span>
+        </div>
+        <button class="doctor-mini__settings" aria-label="Settings">⚙</button>
+        <button class="doctor-mini__menu" aria-label="More options">⋮</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== DASHBOARD LAYOUT ===================== -->
+  <main class="dashboard">
+
+    <!-- ========== LEFT COLUMN — PATIENT LIST ========== -->
+    <aside class="patients-sidebar">
+      <div class="patients-sidebar__header">
+        <h2 class="patients-sidebar__title">Patients</h2>
+        <button class="patients-sidebar__search-btn" aria-label="Search patients">🔍</button>
+      </div>
+
+      <ul class="patient-list">
+        <li class="patient-item">
+          <img src="assets/avatars/emily.jpg" alt="" class="patient-item__avatar">
+          <div class="patient-item__info">
+            <span class="patient-item__name">Emily Williams</span>
+            <span class="patient-item__meta">Female, 18</span>
+          </div>
+          <button class="patient-item__menu" aria-label="Patient options">⋯</button>
+        </li>
+        <!-- ...more patient-item (Ryan Johnson, Brandon Mitchell, etc.) -->
+        <li class="patient-item patient-item--active">
+          <img src="assets/avatars/jessica.jpg" alt="" class="patient-item__avatar">
+          <div class="patient-item__info">
+            <span class="patient-item__name">Jessica Taylor</span>
+            <span class="patient-item__meta">Female, 28</span>
+          </div>
+          <button class="patient-item__menu" aria-label="Patient options">⋯</button>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- ========== CENTER COLUMN — DIAGNOSIS & RESULTS ========== -->
+    <section class="dashboard-main">
+
+      <!-- Diagnosis History -->
+      <div class="diagnosis-history">
+        <h2 class="section-title">Diagnosis History</h2>
+
+        <!-- Blood Pressure Chart Card -->
+        <div class="chart-card">
+          <div class="chart-card__header">
+            <h3 class="chart-card__title">Blood Pressure</h3>
+            <select class="chart-card__period-select">
+              <option>Last 6 months</option>
+            </select>
+          </div>
+
+          <div class="chart-card__body">
+            <div class="chart-card__chart">
+              <!-- chart library renders here -->
+              <canvas id="blood-pressure-chart"></canvas>
+            </div>
+            <div class="chart-card__legend">
+              <div class="legend-item legend-item--systolic">
+                <span class="legend-item__label">Systolic</span>
+                <span class="legend-item__value">160</span>
+                <span class="legend-item__trend">▲ Higher than Average</span>
+              </div>
+              <div class="legend-item legend-item--diastolic">
+                <span class="legend-item__label">Diastolic</span>
+                <span class="legend-item__value">78</span>
+                <span class="legend-item__trend">▼ Lower than Average</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vital Signs Cards -->
+        <div class="vitals-row">
+          <div class="vital-card vital-card--respiratory">
+            <div class="vital-card__icon">🫁</div>
+            <h4 class="vital-card__label">Respiratory Rate</h4>
+            <p class="vital-card__value">20 bpm</p>
+            <span class="vital-card__status vital-card__status--normal">Normal</span>
+          </div>
+          <div class="vital-card vital-card--temperature">
+            <div class="vital-card__icon">🌡</div>
+            <h4 class="vital-card__label">Temperature</h4>
+            <p class="vital-card__value">98.6°F</p>
+            <span class="vital-card__status vital-card__status--normal">Normal</span>
+          </div>
+          <div class="vital-card vital-card--heart-rate">
+            <div class="vital-card__icon">❤️</div>
+            <h4 class="vital-card__label">Heart Rate</h4>
+            <p class="vital-card__value">78 bpm</p>
+            <span class="vital-card__status vital-card__status--low">▼ Lower than Average</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostic List -->
+      <div class="diagnostic-list">
+        <h2 class="section-title">Diagnostic List</h2>
+        <div class="diagnostic-table-wrapper">
+          <table class="diagnostic-table">
+            <thead class="diagnostic-table__head">
+              <tr>
+                <th>Problem/Diagnosis</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody class="diagnostic-table__body">
+              <tr class="diagnostic-table__row">
+                <td>Hypertension</td>
+                <td>Chronic high blood pressure</td>
+                <td><span class="status-badge status-badge--under-observation">Under Observation</span></td>
+              </tr>
+              <!-- ...more rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Lab Results -->
+      <div class="lab-results">
+        <h2 class="section-title">Lab Results</h2>
+        <ul class="lab-results__list">
+          <li class="lab-result-item">
+            <span class="lab-result-item__name">Blood Tests</span>
+            <button class="lab-result-item__download" aria-label="Download Blood Tests">⬇</button>
+          </li>
+          <!-- ...more items (CT Scans, Radiology Reports, X-Rays) -->
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- ========== RIGHT COLUMN — PATIENT PROFILE ========== -->
+    <aside class="patient-profile">
+      <div class="patient-profile__header">
+        <img src="assets/avatars/jessica.jpg" alt="Jessica Taylor" class="patient-profile__avatar">
+        <h2 class="patient-profile__name">Jessica Taylor</h2>
+      </div>
+
+      <ul class="patient-profile__details">
+        <li class="profile-detail">
+          <span class="profile-detail__icon">📅</span>
+          <div class="profile-detail__content">
+            <span class="profile-detail__label">Date Of Birth</span>
+            <span class="profile-detail__value">August 23, 1996</span>
+          </div>
+        </li>
+        <li class="profile-detail">
+          <span class="profile-detail__icon">♀</span>
+          <div class="profile-detail__content">
+            <span class="profile-detail__label">Gender</span>
+            <span class="profile-detail__value">Female</span>
+          </div>
+        </li>
+        <li class="profile-detail">
+          <span class="profile-detail__icon">📞</span>
+          <div class="profile-detail__content">
+            <span class="profile-detail__label">Contact Info.</span>
+            <span class="profile-detail__value">(415) 555-1234</span>
+          </div>
+        </li>
+        <li class="profile-detail">
+          <span class="profile-detail__icon">📞</span>
+          <div class="profile-detail__content">
+            <span class="profile-detail__label">Emergency Contacts</span>
+            <span class="profile-detail__value">(415) 555-5678</span>
+          </div>
+        </li>
+        <li class="profile-detail">
+          <span class="profile-detail__icon">🛡</span>
+          <div class="profile-detail__content">
+            <span class="profile-detail__label">Insurance Provider</span>
+            <span class="profile-detail__value">Sunrise Health Assurance</span>
+          </div>
+        </li>
+      </ul>
+
+      <button class="patient-profile__show-all-btn">Show All Information</button>
+    </aside>
+
+  </main>
+
+</body>
+</html>
