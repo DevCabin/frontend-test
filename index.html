@@ -285,10 +285,25 @@ body {
 
 @media (max-width: 768px) {
   .navbar-toggle { display: block; }
-  .navbar-nav { display: none; }              /* nav pills collapse too — optional */
-  .doctor-mini__info { display: none; }       /* keep just the avatar */
+  .doctor-mini__info { display: none; }
 
   .dashboard { grid-template-columns: 1fr; padding: 16px; }
+
+  /* nav becomes a dropdown panel under the navbar */
+  .navbar-nav {
+    display: none;
+    position: fixed;
+    top: 61px;                 /* navbar height */
+    left: 0; right: 0;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 12px 24px rgba(7,38,53,0.12);
+    z-index: 180;
+    padding: 8px 16px 12px;
+  }
+  .navbar-nav--open { display: block; }
+  .nav-menu { flex-direction: column; gap: 2px; }
+  .nav-link { width: 100%; padding: 12px 14px; border-radius: 10px; }
 
   .patients-sidebar {
     position: fixed;

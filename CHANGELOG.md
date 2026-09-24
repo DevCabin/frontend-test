@@ -6,6 +6,22 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Mobile nav dropdown
+
+**index.html — CSS**
+- Refined mobile responsive styles at `@media (max-width: 768px)`:
+  - Removed inline comments from `.navbar-nav` and `.doctor-mini__info` rules.
+  - Transformed `.navbar-nav` from simple `display: none` into a **fixed dropdown panel**:
+    - Positioned below navbar (`top: 61px`), full width (`left: 0`, `right: 0`).
+    - White background with bottom border and box shadow for depth.
+    - `z-index: 180` to layer above content.
+    - Padding for internal spacing.
+  - Added `.navbar-nav--open` class to toggle dropdown visibility.
+  - Added `.nav-menu` flex-direction: column with `gap: 2px` for vertical stacking.
+  - Added `.nav-link` full width (`width: 100%`) with `padding: 12px 14px` and `border-radius: 10px` for touch-friendly targets.
+
+---
+
 ### 2026-09-24 — Mobile responsive & nav icons
 
 **index.html — CSS**
