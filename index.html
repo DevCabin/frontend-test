@@ -6,9 +6,6 @@
 <title>Tech.Care — HealthCare Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-/* ============================================
-   TECH.CARE DASHBOARD
-   ============================================ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -91,6 +88,7 @@ body {
   gap: 12px;
   padding: 10px 8px;
   border-radius: 8px;
+  cursor: pointer;
 }
 .patient-item--active { background-color: #D0F4F0; }
 .patient-item__avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
@@ -138,7 +136,9 @@ body {
 .legend-item__trend { font-size: 12px; }
 .legend-divider { border: none; border-top: 1px solid rgba(7,38,53,0.15); margin: 8px 0; }
 
-/* --- Pure CSS count-up --- */
+/* --- Pure CSS count-up ---
+   Keyframes with literal targets are injected at runtime
+   from the API values (see registerCountUp in the script). */
 @property --num {
   syntax: '<integer>';
   inherits: false;
@@ -149,27 +149,12 @@ body {
   animation-duration: 1.2s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
-  animation-delay: var(--delay, 0s);
   counter-reset: num var(--num);
 }
 .count-up::after { content: counter(num); }
-.count-up--systolic    { animation-name: count-to-160; --delay: 0s;   }
-.count-up--diastolic   { animation-name: count-to-78;   --delay: .15s; }
-.count-up--respiratory { animation-name: count-to-20;   --delay: .3s;  }
-.count-up--heart       { animation-name: count-to-78b;  --delay: .6s;  }
-.count-up--temp-whole  { animation-name: count-to-98;   --delay: .45s; }
-@keyframes count-to-160 { to { --num: 160; } }
-@keyframes count-to-78   { to { --num: 78; } }
-@keyframes count-to-78b  { to { --num: 78; } }
-@keyframes count-to-20   { to { --num: 20; } }
-@keyframes count-to-98   { to { --num: 98; } }
 @supports not (syntax: '<integer>') {
   .count-up { animation: none; }
-  .count-up--systolic::after    { content: "160"; }
-  .count-up--diastolic::after   { content: "78"; }
-  .count-up--respiratory::after { content: "20"; }
-  .count-up--heart::after       { content: "78"; }
-  .count-up--temp-whole::after  { content: "98"; }
+  .count-up::after { content: attr(data-fallback); }
 }
 
 /* --- Vitals Row --- */
@@ -272,6 +257,15 @@ body {
   cursor: pointer;
 }
 
+/* ---------- LOADING STATE ---------- */
+.loading-note {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px;
+  color: #666;
+  font-size: 14px;
+}
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 1200px) {
   .dashboard { grid-template-columns: 320px 1fr; }
@@ -303,7 +297,7 @@ body {
 
   <div class="navbar-doctor">
     <div class="doctor-mini">
-      <img src="https://i.pravatar.cc/80?img=47" alt="Dr. Jose Simmons" class="doctor-mini__avatar">
+      <img src="https://fedskillstest.storage.googleapis.com/029df9b4-2b9d-4382-b99c-2c7f47988686.png" alt="Dr. Jose Simmons" class="doctor-mini__avatar">
       <div class="doctor-mini__info">
         <span class="doctor-mini__name">Dr. Jose Simmons</span>
         <span class="doctor-mini__title">General Practitioner</span>
@@ -315,66 +309,15 @@ body {
 </header>
 
 <!-- ===================== DASHBOARD ===================== -->
-<main class="dashboard">
+<main class="dashboard" id="dashboard">
 
-  <!-- LEFT: PATIENT LIST -->
+  <!-- LEFT: PATIENT LIST (rendered by JS) -->
   <aside class="patients-sidebar">
     <div class="patients-sidebar__header">
       <h2 class="patients-sidebar__title">Patients</h2>
       <button class="patients-sidebar__search-btn" aria-label="Search patients">🔍</button>
     </div>
-    <ul class="patient-list">
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=32" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Emily Williams</span><span class="patient-item__meta">Female, 18</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=11" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Ryan Johnson</span><span class="patient-item__meta">Male, 45</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=59" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Brandon Mitchell</span><span class="patient-item__meta">Male, 36</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item patient-item--active">
-        <img src="https://i.pravatar.cc/88?img=45" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Jessica Taylor</span><span class="patient-item__meta">Female, 28</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=26" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Samantha Johnson</span><span class="patient-item__meta">Female, 56</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=21" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Ashley Martinez</span><span class="patient-item__meta">Female, 54</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=5" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Olivia Brown</span><span class="patient-item__meta">Female, 32</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=13" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Tyler Davis</span><span class="patient-item__meta">Male, 19</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=15" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Kevin Anderson</span><span class="patient-item__meta">Male, 30</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-      <li class="patient-item">
-        <img src="https://i.pravatar.cc/88?img=53" alt="" class="patient-item__avatar">
-        <div class="patient-item__info"><span class="patient-item__name">Dylan Thompson</span><span class="patient-item__meta">Male, 36</span></div>
-        <button class="patient-item__menu" aria-label="Patient options">⋯</button>
-      </li>
-    </ul>
+    <ul class="patient-list" id="patientList"></ul>
   </aside>
 
   <!-- CENTER: DIAGNOSIS & RESULTS -->
@@ -399,8 +342,8 @@ body {
                 <span class="legend-item__dot legend-item__dot--systolic"></span>
                 <span>Systolic</span>
               </div>
-              <div class="legend-item__value count-up count-up--systolic"></div>
-              <div class="legend-item__trend">▲&nbsp;&nbsp;Higher than Average</div>
+              <div class="legend-item__value" id="systolicValue"></div>
+              <div class="legend-item__trend" id="systolicTrend"></div>
             </div>
             <hr class="legend-divider">
             <div class="legend-item">
@@ -408,8 +351,8 @@ body {
                 <span class="legend-item__dot legend-item__dot--diastolic"></span>
                 <span>Diastolic</span>
               </div>
-              <div class="legend-item__value count-up count-up--diastolic"></div>
-              <div class="legend-item__trend">▼&nbsp;&nbsp;Lower than Average</div>
+              <div class="legend-item__value" id="diastolicValue"></div>
+              <div class="legend-item__trend" id="diastolicTrend"></div>
             </div>
           </div>
         </div>
@@ -423,8 +366,8 @@ body {
 <line x1="24" y1="8" x2="24" y2="20" stroke="#1B4965" stroke-width="2" stroke-linecap="round"/>
 </svg></div>
           <div class="vital-card__label">Respiratory Rate</div>
-          <div class="vital-card__value"><span class="count-up count-up--respiratory"></span> bpm</div>
-          <div class="vital-card__status">Normal</div>
+          <div class="vital-card__value"><span id="respiratoryValue"></span> bpm</div>
+          <div class="vital-card__status" id="respiratoryStatus"></div>
         </div>
         <div class="vital-card vital-card--temperature">
           <div class="vital-card__icon"><svg viewBox="0 0 48 48" fill="none">
@@ -436,8 +379,8 @@ body {
 <line x1="24" y1="14" x2="24" y2="32" stroke="#1B4965" stroke-width="2"/>
 </svg></div>
           <div class="vital-card__label">Temperature</div>
-          <div class="vital-card__value"><span class="count-up count-up--temp-whole"></span>.<span>6</span>&deg;F</div>
-          <div class="vital-card__status">Normal</div>
+          <div class="vital-card__value"><span id="temperatureValue"></span>&deg;F</div>
+          <div class="vital-card__status" id="temperatureStatus"></div>
         </div>
         <div class="vital-card vital-card--heart-rate">
           <div class="vital-card__icon"><svg viewBox="0 0 48 48" fill="none">
@@ -445,8 +388,8 @@ body {
 <polyline points="14,24 20,24 23,18 26,28 29,24 34,24" stroke="#1B4965" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg></div>
           <div class="vital-card__label">Heart Rate</div>
-          <div class="vital-card__value"><span class="count-up count-up--heart"></span> bpm</div>
-          <div class="vital-card__status">▼&nbsp;&nbsp;Lower than Average</div>
+          <div class="vital-card__value"><span id="heartValue"></span> bpm</div>
+          <div class="vital-card__status" id="heartStatus"></div>
         </div>
       </div>
     </div>
@@ -462,158 +405,332 @@ body {
               <th>Status</th>
             </tr>
           </thead>
-          <tbody class="diagnostic-table__body">
-            <tr class="diagnostic-table__row">
-              <td>Hypertension</td>
-              <td>Chronic high blood pressure</td>
-              <td><span class="status-badge status-badge--under-observation">Under Observation</span></td>
-            </tr>
-            <tr class="diagnostic-table__row">
-              <td>Type 2 Diabetes</td>
-              <td>Insulin resistance and elevated blood sugar</td>
-              <td><span class="status-badge status-badge--cured">Cured</span></td>
-            </tr>
-            <tr class="diagnostic-table__row">
-              <td>Asthma</td>
-              <td>Recurrent episodes of bronchial constriction</td>
-              <td><span class="status-badge status-badge--inactive">Inactive</span></td>
-            </tr>
-          </tbody>
+          <tbody class="diagnostic-table__body" id="diagnosticBody"></tbody>
         </table>
       </div>
     </div>
 
     <div class="lab-results">
       <h2 class="section-title">Lab Results</h2>
-      <ul class="lab-results__list">
-        <li class="lab-result-item">
-          <span class="lab-result-item__name">Blood Tests</span>
-          <button class="lab-result-item__download" aria-label="Download Blood Tests">⬇</button>
-        </li>
-        <li class="lab-result-item">
-          <span class="lab-result-item__name">CT Scans</span>
-          <button class="lab-result-item__download" aria-label="Download CT Scans">⬇</button>
-        </li>
-        <li class="lab-result-item">
-          <span class="lab-result-item__name">Radiology Reports</span>
-          <button class="lab-result-item__download" aria-label="Download Radiology Reports">⬇</button>
-        </li>
-        <li class="lab-result-item">
-          <span class="lab-result-item__name">X-Rays</span>
-          <button class="lab-result-item__download" aria-label="Download X-Rays">⬇</button>
-        </li>
-      </ul>
+      <ul class="lab-results__list" id="labResultsList"></ul>
     </div>
 
   </section>
 
-  <!-- RIGHT: PATIENT PROFILE -->
-  <aside class="patient-profile">
+  <!-- RIGHT: PATIENT PROFILE (rendered by JS) -->
+  <aside class="patient-profile" id="patientProfile"></aside>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+/* =========================================================
+   CONFIG — credentials stay in plain text here and are
+   encrypted at runtime (btoa) as the test requires.
+   ========================================================= */
+const API_URL = 'https://fedskillstest.coalitiontechnologies.workers.dev';
+const API_USERNAME = 'coalition';
+const API_PASSWORD = 'skills-test';
+const TARGET_PATIENT = 'Jessica Taylor';
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+let bpChart = null;
+
+/* =========================================================
+   DATA LOADING
+   ========================================================= */
+async function fetchPatients() {
+  const response = await fetch(API_URL, {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Basic ' + btoa(API_USERNAME + ':' + API_PASSWORD),
+      'Content-Type': 'application/json'
+    }
+  });
+  if (!response.ok) throw new Error('API returned ' + response.status);
+  return response.json();
+}
+
+/* Fallback demo data (Jessica Taylor) if the API is unreachable */
+function fallbackPatients() {
+  const history = [];
+  const data = [
+    ['October', 2023, 120, 108], ['November', 2023, 118, 65], ['December', 2023, 160, 110],
+    ['January', 2024, 112, 92], ['February', 2024, 150, 72], ['March', 2024, 158, 78]
+  ];
+  data.forEach(([month, year, sys, dia]) => {
+    history.push({
+      month, year,
+      blood_pressure: {
+        systolic:  { value: sys, levels: sys > 140 ? 'Higher than Average' : 'Normal' },
+        diastolic: { value: dia, levels: dia < 80 ? 'Lower than Average' : 'Normal' }
+      },
+      heart_rate:       { value: 78, levels: 'Lower than Average' },
+      respiratory_rate: { value: 20, levels: 'Normal' },
+      temperature:      { value: 98.6, levels: 'Normal' }
+    });
+  });
+  return [{
+    name: 'Jessica Taylor', gender: 'Female', age: 28,
+    profile_picture: '',
+    date_of_birth: '1996-08-23',
+    phone_number: '(415) 555-1234',
+    emergency_contact: '(415) 555-5678',
+    insurance_type: 'Sunrise Health Assurance',
+    diagnosis_history: history,
+    diagnostic_list: [
+      { name: 'Hypertension', description: 'Chronic high blood pressure', status: 'Under Observation' },
+      { name: 'Type 2 Diabetes', description: 'Insulin resistance and elevated blood sugar', status: 'Cured' },
+      { name: 'Asthma', description: 'Recurrent episodes of bronchial constriction', status: 'Inactive' }
+    ],
+    lab_results: [
+      { name: 'Blood Tests' }, { name: 'CT Scans' },
+      { name: 'Radiology Reports' }, { name: 'X-Rays' }
+    ]
+  }];
+}
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function trendArrow(levels) {
+  const t = (levels || '').toLowerCase();
+  if (t.includes('higher')) return '▲\u00a0\u00a0';
+  if (t.includes('lower'))  return '▼\u00a0\u00a0';
+  return '';
+}
+
+/* Sort diagnosis history chronologically and keep the last 6 entries */
+function lastSixMonths(history) {
+  return [...history].sort((a, b) =>
+    (a.year - b.year) || (MONTHS.indexOf(a.month) - MONTHS.indexOf(b.month))
+  ).slice(-6);
+}
+
+/* Pure CSS count-up: injects a keyframes block with a literal
+   target, then applies the animating class. */
+function registerCountUp(el, target, delaySec = 0) {
+  if (!el) return;
+  const name = 'count-' + Math.random().toString(36).slice(2, 9);
+  const style = document.createElement('style');
+  style.textContent = `@keyframes ${name} { to { --num: ${Math.floor(target)}; } }`;
+  document.head.appendChild(style);
+  el.style.animationName = name;
+  el.style.animationDelay = delaySec + 's';
+  el.setAttribute('data-fallback', Math.floor(target));
+  el.classList.add('count-up');
+}
+
+function formatDate(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+function statusClass(status) {
+  const s = (status || '').toLowerCase().replace(/\s+/g, '-');
+  return ['under-observation', 'cured', 'inactive'].includes(s) ? s : 'inactive';
+}
+
+/* =========================================================
+   RENDERERS
+   ========================================================= */
+function renderPatientList(patients, activeName) {
+  document.getElementById('patientList').innerHTML = patients.map(p => `
+    <li class="patient-item ${p.name === activeName ? 'patient-item--active' : ''}">
+      <img src="${p.profile_picture}" alt="" class="patient-item__avatar"
+           onerror="this.src='https://i.pravatar.cc/88?u=${encodeURIComponent(p.name)}'">
+      <div class="patient-item__info">
+        <span class="patient-item__name">${p.name}</span>
+        <span class="patient-item__meta">${p.gender}, ${p.age}</span>
+      </div>
+      <button class="patient-item__menu" aria-label="Patient options">⋯</button>
+    </li>`).join('');
+}
+
+function renderProfile(p) {
+  document.getElementById('patientProfile').innerHTML = `
     <div class="patient-profile__header">
-      <img src="https://i.pravatar.cc/320?img=45" alt="Jessica Taylor" class="patient-profile__avatar">
-      <h2 class="patient-profile__name">Jessica Taylor</h2>
+      <img src="${p.profile_picture}" alt="${p.name}" class="patient-profile__avatar"
+           onerror="this.src='https://i.pravatar.cc/320?u=${encodeURIComponent(p.name)}'">
+      <h2 class="patient-profile__name">${p.name}</h2>
     </div>
     <ul class="patient-profile__details">
       <li class="profile-detail">
         <span class="profile-detail__icon">📅</span>
         <div class="profile-detail__content">
           <span class="profile-detail__label">Date Of Birth</span>
-          <span class="profile-detail__value">August 23, 1996</span>
+          <span class="profile-detail__value">${formatDate(p.date_of_birth)}</span>
         </div>
       </li>
       <li class="profile-detail">
-        <span class="profile-detail__icon">♀</span>
+        <span class="profile-detail__icon">${p.gender === 'Male' ? '♂' : '♀'}</span>
         <div class="profile-detail__content">
           <span class="profile-detail__label">Gender</span>
-          <span class="profile-detail__value">Female</span>
+          <span class="profile-detail__value">${p.gender}</span>
         </div>
       </li>
       <li class="profile-detail">
         <span class="profile-detail__icon">📞</span>
         <div class="profile-detail__content">
           <span class="profile-detail__label">Contact Info.</span>
-          <span class="profile-detail__value">(415) 555-1234</span>
+          <span class="profile-detail__value">${p.phone_number}</span>
         </div>
       </li>
       <li class="profile-detail">
         <span class="profile-detail__icon">📞</span>
         <div class="profile-detail__content">
           <span class="profile-detail__label">Emergency Contacts</span>
-          <span class="profile-detail__value">(415) 555-5678</span>
+          <span class="profile-detail__value">${p.emergency_contact}</span>
         </div>
       </li>
       <li class="profile-detail">
         <span class="profile-detail__icon">🛡</span>
         <div class="profile-detail__content">
           <span class="profile-detail__label">Insurance Provider</span>
-          <span class="profile-detail__value">Sunrise Health Assurance</span>
+          <span class="profile-detail__value">${p.insurance_type}</span>
         </div>
       </li>
     </ul>
-    <button class="patient-profile__show-all-btn">Show All Information</button>
-  </aside>
+    <button class="patient-profile__show-all-btn">Show All Information</button>`;
+}
 
-</main>
+function renderChart(sixMonths) {
+  const labels = sixMonths.map(h => `${h.month.slice(0,3)}, ${h.year}`);
+  const systolic  = sixMonths.map(h => h.blood_pressure.systolic.value);
+  const diastolic = sixMonths.map(h => h.blood_pressure.diastolic.value);
 
-<script src="chart.umd.min.js"></script>
-<script>
-const ctx = document.getElementById('bpChart').getContext('2d');
-const labels = ["Oct, 2023","Nov, 2023","Dec, 2023","Jan, 2024","Feb, 2024","Mar, 2024"];
-const systolic  = [120, 118, 160, 112, 150, 158];
-const diastolic = [108, 65, 110, 92, 72, 78];
-
-new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels,
-    datasets: [
-      {
-        label: 'Systolic',
-        data: systolic,
-        borderColor: '#E66CAB',
-        backgroundColor: '#E66CAB',
-        pointBackgroundColor: '#E66CAB',
-        pointBorderColor: '#fff',
-        pointBorderWidth: 1.5,
-        pointRadius: 4,
-        borderWidth: 2,
-        tension: 0.4,
-      },
-      {
-        label: 'Diastolic',
-        data: diastolic,
-        borderColor: '#8C6FE6',
-        backgroundColor: '#8C6FE6',
-        pointBackgroundColor: '#8C6FE6',
-        pointBorderColor: '#fff',
-        pointBorderWidth: 1.5,
-        pointRadius: 4,
-        borderWidth: 2,
-        tension: 0.4,
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: { duration: 1200, easing: 'easeOutQuart' },
-    plugins: { legend: { display: false } },
-    scales: {
-      y: {
-        min: 60,
-        max: 180,
-        ticks: { stepSize: 20, color: '#072635', font: { family: 'Manrope', size: 10 } },
-        grid: { color: 'rgba(7,38,53,0.12)' },
-        border: { display: false },
-      },
-      x: {
-        ticks: { color: '#072635', font: { family: 'Manrope', size: 10 } },
-        grid: { display: false },
-        border: { display: false },
+  if (bpChart) bpChart.destroy();
+  bpChart = new Chart(document.getElementById('bpChart').getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Systolic',
+          data: systolic,
+          borderColor: '#E66CAB',
+          backgroundColor: '#E66CAB',
+          pointBackgroundColor: '#E66CAB',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 1.5,
+          pointRadius: 4,
+          borderWidth: 2,
+          tension: 0.4,
+        },
+        {
+          label: 'Diastolic',
+          data: diastolic,
+          borderColor: '#8C6FE6',
+          backgroundColor: '#8C6FE6',
+          pointBackgroundColor: '#8C6FE6',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 1.5,
+          pointRadius: 4,
+          borderWidth: 2,
+          tension: 0.4,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 1200, easing: 'easeOutQuart' },
+      plugins: { legend: { display: false } },
+      scales: {
+        y: {
+          min: 60, max: 180,
+          ticks: { stepSize: 20, color: '#072635', font: { family: 'Manrope', size: 10 } },
+          grid: { color: 'rgba(7,38,53,0.12)' },
+          border: { display: false },
+        },
+        x: {
+          ticks: { color: '#072635', font: { family: 'Manrope', size: 10 } },
+          grid: { display: false },
+          border: { display: false },
+        }
       }
     }
+  });
+}
+
+function renderLegendAndVitals(latest) {
+  const sys = latest.blood_pressure.systolic;
+  const dia = latest.blood_pressure.diastolic;
+
+  const sysEl = document.getElementById('systolicValue');
+  const diaEl = document.getElementById('diastolicValue');
+  registerCountUp(sysEl, sys.value, 0);
+  registerCountUp(diaEl, dia.value, 0.15);
+  document.getElementById('systolicTrend').textContent  = trendArrow(sys.levels) + sys.levels;
+  document.getElementById('diastolicTrend').textContent = trendArrow(dia.levels) + dia.levels;
+
+  const resp = latest.respiratory_rate;
+  const temp = latest.temperature;
+  const heart = latest.heart_rate;
+
+  registerCountUp(document.getElementById('respiratoryValue'), resp.value, 0.3);
+  document.getElementById('respiratoryStatus').textContent = trendArrow(resp.levels) + resp.levels;
+
+  /* Temperature: whole number counts up, decimal digit rendered statically */
+  const whole = Math.floor(temp.value);
+  const dec   = Math.round((temp.value - whole) * 10);
+  const tempEl = document.getElementById('temperatureValue');
+  registerCountUp(tempEl, whole, 0.45);
+  const decSpan = document.createElement('span');
+  decSpan.textContent = '.' + dec;
+  tempEl.after(decSpan);
+  document.getElementById('temperatureStatus').textContent = trendArrow(temp.levels) + temp.levels;
+
+  registerCountUp(document.getElementById('heartValue'), heart.value, 0.6);
+  document.getElementById('heartStatus').textContent = trendArrow(heart.levels) + heart.levels;
+}
+
+function renderDiagnosticList(list) {
+  const rows = (Array.isArray(list) ? list : []).filter(d => d && d.name);
+  document.getElementById('diagnosticBody').innerHTML = rows.map(d => `
+    <tr class="diagnostic-table__row">
+      <td>${d.name}</td>
+      <td>${d.description ?? ''}</td>
+      <td><span class="status-badge status-badge--${statusClass(d.status)}">${d.status ?? '—'}</span></td>
+    </tr>`).join('');
+}
+
+function renderLabResults(list) {
+  const items = (Array.isArray(list) ? list : []).filter(l => l && l.name);
+  document.getElementById('labResultsList').innerHTML = items.map(l => `
+    <li class="lab-result-item">
+      <span class="lab-result-item__name">${l.name}</span>
+      <button class="lab-result-item__download" aria-label="Download ${l.name}">⬇</button>
+    </li>`).join('');
+}
+
+/* =========================================================
+   BOOT
+   ========================================================= */
+(async function init() {
+  let patients;
+  try {
+    patients = await fetchPatients();
+  } catch (err) {
+    console.warn('API unreachable, using fallback data:', err.message);
+    patients = fallbackPatients();
   }
-});
+
+  /* Per the test docs: display Jessica Taylor's data */
+  const patient = patients.find(p => p.name === TARGET_PATIENT) || patients[0];
+  /* Doctor photo isn't in the API — borrow a working patient photo */
+  const doctorImg = document.querySelector('.doctor-mini__avatar');
+  if (doctorImg) doctorImg.src = patients[1].profile_picture;
+  const sixMonths = lastSixMonths(patient.diagnosis_history);
+  const latest = sixMonths[sixMonths.length - 1];
+
+  renderPatientList(patients, patient.name);
+  renderProfile(patient);
+  renderChart(sixMonths);
+  renderLegendAndVitals(latest);
+  renderDiagnosticList(patient.diagnostic_list);
+  renderLabResults(patient.lab_results);
+})();
 </script>
 
 </body>

@@ -6,6 +6,45 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Dynamic data-driven dashboard (API integration)
+
+**index.html — CSS (inline `<style>`)**
+- Added `cursor: pointer` to `.patient-item` for interactive feedback.
+- Removed all hardcoded CSS count-up keyframes and classes (`.count-up--systolic`, `.count-up--diastolic`, `.count-up--respiratory`, `.count-up--heart`, `.count-up--temp-whole`) — now injected dynamically at runtime from API values.
+- Added `data-fallback` attribute support for `@supports not (syntax: '<integer>')` fallback.
+- Removed `animation-delay` from `.count-up` base rule (now set per-element via JS).
+- Added `.loading-note` styles for the loading state placeholder.
+- Removed CSS file header comment.
+
+**index.html — HTML structure**
+- Replaced hardcoded patient list with empty `<ul id="patientList">` for dynamic rendering.
+- Replaced hardcoded diagnostic table rows with empty `<tbody id="diagnosticBody">`.
+- Replaced hardcoded lab results with empty `<ul id="labResultsList">`.
+- Replaced hardcoded patient profile data with placeholder elements and `id` attributes.
+- Added `id` attributes to all vital sign elements (`systolicValue`, `diastolicValue`, `respiratoryValue`, `temperatureValue`, `heartValue`, etc.) for JS targeting.
+- Updated doctor avatar URL from pravatar.cc to Google Cloud Storage (`fedskillstest.storage.googleapis.com`).
+- Added loading note element for initial state.
+
+**index.html — JavaScript (complete refactor)**
+- Added API endpoint constant pointing to `https://fedskillstest.co.uk/api/v1/patients`.
+- Added `TARGET_PATIENT` constant ("Jessica Taylor") per test requirements.
+- Implemented `fetchPatients()` async function to fetch data from API.
+- Implemented `fallbackPatients()` function with complete hardcoded patient data as offline fallback.
+- Implemented `lastSixMonths()` helper to filter diagnosis history to last 6 months.
+- Implemented `statusClass()` helper for mapping status strings to CSS classes.
+- Implemented `trendArrow()` helper for rendering up/down trend indicators.
+- Implemented `registerCountUp()` function for dynamic CSS count-up animations with IntersectionObserver support.
+- Implemented `renderPatientList()` to dynamically populate patient sidebar with click handlers.
+- Implemented `renderProfile()` to populate patient profile (name, DOB, gender, contact, insurance).
+- Implemented `renderChart()` to render Chart.js blood pressure line chart from API data.
+- Implemented `renderLegendAndVitals()` to populate chart legend and vital signs cards with animated values.
+- Implemented `renderDiagnosticList()` to render diagnosis history table.
+- Implemented `renderLabResults()` to render lab results list.
+- Implemented `init()` boot function that orchestrates data fetching, fallback handling, and rendering.
+- Added patient click handlers for switching between patients and re-rendering all dashboard sections.
+
+---
+
 ### 2026-09-24 — Populate dashboard content & add Chart.js
 
 **index.html**
