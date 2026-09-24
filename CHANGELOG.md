@@ -6,6 +6,43 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Complete SVG icon system overhaul
+
+**index.html — CSS**
+- **Brand logo**: changed from text to SVG (`height: 48px`, `width: auto`).
+- **Nav link SVGs**: changed from fixed `17×17px` to `height: 17px`, `width: auto` for proper scaling.
+- **Doctor mini buttons**: refactored settings/menu from emoji to flex layout with SVG icons (`18.944×20px` and `3.714×18px`).
+- Added `.dashboard__right` flex container for right column layout.
+- **Search button**: changed from emoji to flex with SVG (`17.995×18px`).
+- **Patient item menu**: changed from emoji to flex with SVG (`18×3.714px`).
+- **Chart period chevron**: changed from `font-size: 10px` to `inline-flex` with SVG (`10.646×6px`).
+- **Legend trend**: added flex layout with `gap: 6px` and SVG support (`10×5.479px`).
+- **Vital card labels**: added flex layout with `gap: 8px` and SVG support (`22×22px`).
+- **Profile detail icons**: added flex layout with SVG support (`22×22px`).
+- Various button/icon styling updates for consistent flex-based icon containers.
+
+**index.html — HTML**
+- **Brand logo**: replaced text "Tech.Care" with inline SVG logo (48px height).
+- **All nav links**: replaced text with inline SVG icons (home, users, calendar, message, transactions).
+- **Doctor settings/menu buttons**: replaced emoji (⚙, ⋮) with detailed SVG icons.
+- **Search button**: replaced emoji (🔍) with SVG search icon.
+- **Patient item menu buttons**: replaced emoji (⋯) with SVG horizontal dots icon.
+- **Chart period selector**: replaced emoji chevron with SVG down-arrow icon.
+- **Profile detail icons**: replaced emoji (📅, ♀, ♂, 📞, 🛡) with SVG icons (calendar, gender, phone, insurance).
+- **Download button**: replaced simple stroke-based SVG with detailed filled SVG icon.
+
+**index.html — JavaScript**
+- **Created SVG icon constants** at script top: `homeIcon`, `usersIcon`, `calendarIcon`, `messageIcon`, `transactionsIcon`, `settingsIcon`, `menuIcon`, `searchIcon`, `moreIcon`, `calendarSmallIcon`, `femaleIcon`, `maleIcon`, `phoneIcon`, `insuranceIcon`.
+- Updated `trendArrow()` function to return **SVG arrows** instead of emoji (▲/▼).
+- Changed all trend display updates from `.textContent` → `.innerHTML` to support SVG rendering.
+- Updated `renderProfile()` to use SVG icon constants instead of emoji.
+- Updated download button SVG to more detailed Material Design-style icon.
+
+**New file:**
+- `jessica-taylor.png` — Patient profile image for Jessica Taylor.
+
+---
+
 ### 2026-09-24 — UI refinements & status badge removal
 
 **index.html — CSS**
