@@ -1,7 +1,7 @@
 /* ============================================
    TECH.CARE DASHBOARD — SKELETON CSS
-   Layout only. Colors/borders are temporary
-   "ghost" styles to make structure visible.
+   Layout only. Real colors where the mockup
+   shows them; everything else stays neutral.
    ============================================ */
 
 /* ---------- 1. RESET / BASE ---------- */
@@ -15,21 +15,11 @@
 
 body {
   font-family: 'Manrope', sans-serif;
+  color: #072635;
   background-color: #f4f4f4;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-/* Temporary ghost borders so skeleton structure is visible */
-.top-navbar,
-.patients-sidebar,
-.chart-card,
-.vital-card,
-.diagnostic-table-wrapper,
-.lab-results,
-.patient-profile {
-  border: 1px dashed #999;
 }
 
 /* ---------- 2. TOP NAVBAR ---------- */
@@ -39,7 +29,7 @@ body {
   justify-content: space-between;
   padding: 12px 32px;
   background-color: #fff;
-  border-bottom: 1px solid #e0e0e0; /* real divider — keep */
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .navbar-brand {
@@ -70,12 +60,12 @@ body {
   padding: 8px 16px;
   border-radius: 20px;
   text-decoration: none;
-  color: #333;
+  color: #072635;
   font-weight: 500;
 }
 
 .nav-link--active {
-  background-color: #01F0D5; /* teal — keep for active state */
+  background-color: #01F0D5;
 }
 
 .navbar-doctor {
@@ -120,7 +110,6 @@ body {
   background-color: #fff;
   border-radius: 12px;
   padding: 16px;
-  /* Sticky so list scrolls independently */
   position: sticky;
   top: 24px;
   max-height: calc(100vh - 48px);
@@ -147,7 +136,7 @@ body {
 }
 
 .patient-item--active {
-  background-color: #D0F4F0; /* mint — keep for selected */
+  background-color: #D0F4F0;
 }
 
 .patient-item__avatar {
@@ -185,13 +174,14 @@ body {
 }
 
 .section-title {
-  font-size: 22px;
+  font-size: 24px;
+  font-weight: 800;
   margin-bottom: 16px;
 }
 
 /* --- Chart Card --- */
 .chart-card {
-  background-color: #F4F0FE; /* lavender — keep */
+  background-color: #F4F0FE;
   border-radius: 12px;
   padding: 24px;
 }
@@ -203,6 +193,11 @@ body {
   margin-bottom: 16px;
 }
 
+.chart-card__title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .chart-card__body {
   display: flex;
   gap: 24px;
@@ -210,7 +205,6 @@ body {
 
 .chart-card__chart {
   flex-grow: 1;
-  /* Chart canvas fills this */
 }
 
 .chart-card__legend {
@@ -253,9 +247,9 @@ body {
   gap: 8px;
 }
 
-.vital-card--respiratory  { background-color: #E0F3FA; } /* blue */
-.vital-card--temperature  { background-color: #FFE6E9; } /* peach */
-.vital-card--heart-rate   { background-color: #FFE1F1; } /* pink */
+.vital-card--respiratory  { background-color: #E0F3FA; }
+.vital-card--temperature  { background-color: #FFE6E9; }
+.vital-card--heart-rate   { background-color: #FFE1F1; }
 
 .vital-card__icon {
   width: 56px;
@@ -301,16 +295,12 @@ body {
 .diagnostic-table__head {
   position: sticky;
   top: 0;
-  background-color: #F4F4F4; /* header row tint */
+  background-color: #F4F4F4;
 }
 
 .diagnostic-table__row {
   border-top: 1px solid #eee;
 }
-
-.status-badge--under-observation { /* yellow pill */ }
-.status-badge--cured             { /* green pill  */ }
-.status-badge--inactive          { /* gray pill   */ }
 
 /* --- Lab Results --- */
 .lab-results {
@@ -350,6 +340,11 @@ body {
   margin-bottom: 12px;
 }
 
+.patient-profile__name {
+  font-size: 30px;
+  font-weight: 800;
+}
+
 .patient-profile__details {
   list-style: none;
   text-align: left;
@@ -380,12 +375,12 @@ body {
   padding: 12px;
   border: none;
   border-radius: 24px;
-  background-color: #01F0D5; /* teal — keep */
+  background-color: #01F0D5;
   font-weight: 600;
   cursor: pointer;
 }
 
-/* ---------- 7. RESPONSIVE HOOKS (fill in later) ---------- */
+/* ---------- 7. RESPONSIVE HOOKS ---------- */
 @media (max-width: 1200px) {
   /* Tablet: stack right column under main */
 }
