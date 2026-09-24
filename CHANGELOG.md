@@ -6,6 +6,36 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Mobile responsive & nav icons
+
+**index.html — CSS**
+- Added `.nav-link svg` sizing rule (17×17px, flex-shrink: 0).
+- Added `.navbar-toggle` hamburger button styles (hidden by default, visible at ≤768px).
+- Expanded `@media (max-width: 768px)` with full mobile responsive layout:
+  - Toggle button visible, nav pills and doctor info hidden.
+  - Dashboard switches to single-column layout with reduced padding.
+  - Patient sidebar becomes a fixed slide-out drawer (85vw, max 340px) with smooth transform animation and box shadow.
+  - Added `.sidebar-overlay` with fade transition for backdrop when drawer is open.
+  - Patient profile auto-positions to full width.
+
+**index.html — HTML**
+- Added hamburger toggle button (`☰`) with `id="sidebarToggle"` and aria-label to navbar.
+- Added `id="mainNav"` to nav element.
+- Replaced text-only nav links with **SVG icons + text spans** for all five nav items (Overview, Patients, Schedule, Message, Transactions). Each icon is inline SVG with stroke-based design matching the Manrope font aesthetic.
+
+**index.html — JavaScript**
+- Enhanced `formatDate()` function to handle multiple date formats:
+  - `YYYY-MM-DD` (ISO format from API)
+  - `MM/DD/YYYY` (US format)
+  - Fallback to native `Date` parsing for other formats.
+- Added mobile sidebar drawer functionality:
+  - Creates overlay element dynamically and appends to body.
+  - Toggle button click handler opens/closes sidebar with `.patients-sidebar--open` class.
+  - Overlay click handler closes sidebar and removes `.sidebar-overlay--visible` class.
+  - Smooth slide-in/slide-out animation with backdrop fade.
+
+---
+
 ### 2026-09-24 — Dynamic data-driven dashboard (API integration)
 
 **index.html — CSS (inline `<style>`)**
