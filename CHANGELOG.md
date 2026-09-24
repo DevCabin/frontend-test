@@ -6,6 +6,39 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Fluid grid & mobile UX refinements
+
+**index.html — CSS**
+- Added `overflow-x: hidden` to `body` to prevent horizontal scroll from off-canvas drawer.
+- Moved `.nav-link svg` rule up next to `.nav-link` for better organization.
+- Transformed dashboard grid from **fixed widths** to **fluid `minmax()` tracks**:
+  - `grid-template-columns: minmax(260px, 367px) minmax(0, 1fr) minmax(300px, 410px)`
+  - Added `.dashboard > * { min-width: 0 }` to prevent grid blowout.
+  - Added `.chart-card__body > * { min-width: 0 }` for same reason.
+- Removed `.loading-note` styles (no longer needed).
+- Adjusted responsive breakpoints:
+  - **Tablet**: changed from `max-width: 1200px` → `max-width: 1400px` with fluid grid `minmax(240px, 300px) minmax(0, 1fr)`.
+  - **Mobile**: changed from `max-width: 768px` → `max-width: 900px`.
+- Updated nav dropdown `top` position from `61px` → `64px` (correct navbar height calculation).
+- Added descriptive comments to responsive sections.
+
+**index.html — HTML**
+- Changed sidebar toggle `aria-label` from "Toggle patient list" → "Toggle navigation menu" (now controls nav dropdown).
+- **Simplified nav items**: removed inline SVG icons, now text-only spans (Overview, Patients, Schedule, Message, Transactions).
+- Removed loading note element from DOM.
+
+**index.html — JavaScript**
+- Added null coalescing (`?? ''`) to all trend level text concatenations to handle missing `levels` data gracefully.
+- **Refactored mobile navigation flow**:
+  - Hamburger button now toggles **nav dropdown** (`.navbar-nav--open`), not sidebar.
+  - "Patients" nav link click handler opens the **patient drawer** on mobile (closes nav dropdown first).
+  - Tapping a patient item in the drawer **auto-closes** it on mobile.
+  - Overlay click still closes sidebar as before.
+- Improved doctor photo fallback: uses `patients[1].profile_picture` if available, otherwise falls back to current patient's photo.
+- Added null check before calling `renderLegendAndVitals(latest)` to handle missing diagnosis history.
+
+---
+
 ### 2026-09-24 — Mobile nav dropdown
 
 **index.html — CSS**
