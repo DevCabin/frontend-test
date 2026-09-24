@@ -186,28 +186,19 @@ body {
 .diagnostic-table-wrapper {
   background-color: #fff;
   border-radius: 16px;
-  max-height: 280px;
+  max-height: 240px;
   overflow-y: auto;
 }
 .diagnostic-table { width: 100%; border-collapse: collapse; }
 .diagnostic-table th, .diagnostic-table td {
   text-align: left;
-  padding: 14px 20px;
+  padding: 16px 20px;
   font-size: 14px;
 }
 .diagnostic-table__head { position: sticky; top: 0; background-color: #F4F4F4; }
 .diagnostic-table__head th { font-weight: 700; }
 .diagnostic-table__row { border-top: 1px solid #eee; }
-.status-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.status-badge--under-observation { background: #F4F0FE; color: #8C6FE6; }
-.status-badge--cured             { background: #D0F4F0; color: #0e8a72; }
-.status-badge--inactive          { background: #eee; color: #666; }
+.diagnostic-table__status { color: #072635; }
 
 /* --- Lab Results --- */
 .lab-results { background-color: #fff; border-radius: 16px; padding: 20px; }
@@ -216,10 +207,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 10px 12px;
+  margin: 0 -12px;
+  border-radius: 8px;
   font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
-.lab-result-item__download { border: none; background: none; cursor: pointer; font-size: 16px; }
+.lab-result-item:hover { background: #F4F4F4; }
+.lab-result-item__download {
+  border: none; background: none; cursor: pointer;
+  display: flex; align-items: center; padding: 2px;
+}
 
 /* ---------- PATIENT PROFILE ---------- */
 .patient-profile {
@@ -245,8 +244,7 @@ body {
 .profile-detail__label { font-size: 12px; color: #666; }
 .profile-detail__value { font-size: 14px; font-weight: 700; }
 .patient-profile__show-all-btn {
-  width: 100%;
-  padding: 12px;
+  padding: 12px 32px;
   border: none;
   border-radius: 24px;
   background-color: #01F0D5;
@@ -632,11 +630,6 @@ function formatDate(dob) {
   return `${MONTHS[m - 1]} ${d}, ${y}`;
 }
 
-function statusClass(status) {
-  const s = (status || '').toLowerCase().replace(/\s+/g, '-');
-  return ['under-observation', 'cured', 'inactive'].includes(s) ? s : 'inactive';
-}
-
 function renderPatientList(patients, activeName) {
   document.getElementById('patientList').innerHTML = patients.map(p => `
     <li class="patient-item ${p.name === activeName ? 'patient-item--active' : ''}">
@@ -768,7 +761,7 @@ function renderDiagnosticList(list) {
     <tr class="diagnostic-table__row">
       <td>${d.name}</td>
       <td>${d.description ?? ''}</td>
-      <td><span class="status-badge status-badge--${statusClass(d.status)}">${d.status ?? '—'}</span></td>
+      <td class="diagnostic-table__status">${d.status ?? '—'}</td>
     </tr>`).join('');
 }
 
@@ -777,7 +770,9 @@ function renderLabResults(list) {
   document.getElementById('labResultsList').innerHTML = items.map(l => `
     <li class="lab-result-item">
       <span class="lab-result-item__name">${l.name}</span>
-      <button class="lab-result-item__download" aria-label="Download ${l.name}">⬇</button>
+      <button class="lab-result-item__download" aria-label="Download ${l.name}">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#072635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>
+      </button>
     </li>`).join('');
 }
 

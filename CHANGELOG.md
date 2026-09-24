@@ -6,6 +6,28 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — UI refinements & status badge removal
+
+**index.html — CSS**
+- Reduced `.diagnostic-table-wrapper` max-height from `280px` → `240px`.
+- Increased `.diagnostic-table th, td` padding from `14px` → `16px` for better row spacing.
+- **Removed all status badge styles**: deleted `.status-badge` base class and color variants (`.status-badge--under-observation`, `.status-badge--cured`, `.status-badge--inactive`). Status now displays as plain text.
+- Added `.diagnostic-table__status` with `color: #072635` for simplified status display.
+- Enhanced `.lab-result-item` with hover state:
+  - Adjusted padding: `12px 0` → `10px 12px`.
+  - Added `margin: 0 -12px`, `border-radius: 8px`, `cursor: pointer`.
+  - Added `transition: background 0.15s ease`.
+  - Added `.lab-result-item:hover` with `background: #F4F4F4`.
+- Refactored `.lab-result-item__download`: removed `font-size: 16px`, added flex layout with `padding: 2px`.
+- Adjusted `.patient-profile__show-all-btn`: removed `width: 100%`, changed padding from `12px` → `12px 32px` for better proportions.
+
+**index.html — JavaScript**
+- Removed `statusClass()` helper function (no longer needed).
+- Changed diagnostic table status rendering from colored badge (`<span class="status-badge status-badge--${statusClass(d.status)}">`) to plain text (`<td class="diagnostic-table__status">`).
+- Replaced emoji download icon (`⬇`) in lab results with **inline SVG download icon** (18×18, stroke-based, color `#072635`).
+
+---
+
 ### 2026-09-24 — Code cleanup & icon refactor
 
 **index.html — CSS**
