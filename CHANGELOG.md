@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### 2026-09-24 — Populate dashboard content & add Chart.js
+
+**index.html**
+- Replaced all local image paths (`assets/doctor.jpg`, `assets/patients/*`) with **pravatar.cc** placeholder URLs for doctor and patient avatars.
+- Populated the **patient list** sidebar with full data: Emily Williams, Ryan Johnson, Brandon Mitchell, Jessica Taylor (active), Samantha Johnson, Ashley Martinez, etc.
+- Added real **diagnosis history** table rows (e.g., Hypertension, Diabetes, Asthma, Osteoarthritis) with dates, status badges, etc.
+- Added **lab results** data items (CBC, Lipid Panel, HbA1c, X-Rays) with dates and download buttons.
+- Populated the **patient profile** (Jessica Taylor) with date of birth, gender, contact info, emergency contact, and insurance provider.
+- Integrated **Chart.js** (`chart.umd.min.js`) with an inline script rendering a blood-pressure line chart (systolic in pink `#E66CAB`, diastolic in purple `#8C6FE6`) across 6 months (Oct 2023 – Mar 2024).
+- Chart configured with Manrope font, custom grid, responsive sizing, and smooth curve tension.
+- Flattened HTML indentation across the document for a cleaner structure.
+
+---
+
 ### 2026-09-24 — Typography polish & CSS cleanup
 
 **index.html**
