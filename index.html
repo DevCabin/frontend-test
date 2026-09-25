@@ -64,7 +64,7 @@ body {
   grid-template-columns: minmax(260px, 367px) minmax(0, 1fr) minmax(300px, 410px);
   gap: 24px;
   padding: 24px 32px;
-  align-items: start;
+  align-items: stretch;
 }
 .dashboard > * { min-width: 0; }
 .dashboard__right { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
@@ -109,6 +109,13 @@ body {
 /* ---------- CENTER MAIN COLUMN ---------- */
 .dashboard-main { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
 .section-title { font-size: 24px; font-weight: 800; margin-bottom: 16px; }
+
+.diagnostic-list {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
 
 /* --- Chart Card --- */
 .chart-card {
@@ -199,7 +206,8 @@ body {
 .diagnostic-table-wrapper {
   background-color: #fff;
   border-radius: 16px;
-  max-height: 240px;
+  flex: 1;
+  min-height: 240px;
   overflow-y: auto;
 }
 .diagnostic-table { width: 100%; border-collapse: collapse; }
@@ -218,7 +226,8 @@ body {
   background-color: #fff;
   border-radius: 16px;
   padding: 20px;
-  max-height: 240px;
+  flex: 1;
+  min-height: 240px;
   overflow-y: auto;
 }
 .lab-results__list { list-style: none; }
